@@ -11,6 +11,7 @@ from . import _ops_to_layers
 from ._interpret_shapes import _interpret_shape as interpret_shape
 from ._tf_graph_transform import _topological_sort_ops, _find_unused_ops
 from .optimizations._optimize_nn_spec import optimize_nn_spec
+from collections import OrderedDict
 
 # Context stores useful information about TF graph and the conversion process
 class Context(object):
@@ -181,8 +182,8 @@ def _convert_pb_to_mlmodel(tf_model_path,
   # Fill in input information
   input_features = []
   output_features = []
-  input_feed_dict = dict() #Input tensors' values
-  input_feed_dict2 = dict() # used later to find skippable ops
+  input_feed_dict = OrderedDict() #Input tensors' values
+  input_feed_dict2 = OrderedDict() # used later to find skippable ops
 
   # run through all placeholders
   for op in OPS:
